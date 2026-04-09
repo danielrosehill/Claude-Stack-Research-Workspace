@@ -1,61 +1,151 @@
-# Purpose Of This Workspace Repository 
+# Stack Research Workspace — Claude Code Instructions
 
-This repository provides a workspace environment for the user, Daniel, To work with you, to identify software components or solutions for various projects. 
+## What This Is
 
-The projects might be for Daniels personal needs for his business use, or less commonly for use with a specific client. 
+A Claude Code workspace for **stack and software evaluation research** — helping the user pick tools, components, and vendors against a specific spec. It follows the same folder contract as the other Claude research templates, but the output style is tuned for vendor-selection work: ranked shortlists, comparison tables, current pricing, deal-breaker flagging, and source skepticism.
 
-The context is significant only in the sense that it might change the budgetary parameters. Don't waste time by asking Daniel to provide the context. If it's for a client with a higher budget than might otherwise be the case, then he will proactively notify you of that. 
+## Root orientation files (read these first)
 
-## Key Folders
+Four short files at the repo root frame every session. Read them before doing anything non-trivial:
 
-The prompt folder is where Daniel will write his stack research requests and will path them to you in the conversation. When you have finished with an evaluation, you can help Daniel by moving them into the run folder. 
+| File | Role |
+|---|---|
+| `SCOPE.md` | What this template is and isn't |
+| `CONTEXT.md` | Always-on background: what's being evaluated, budget band, deal-breakers |
+| `MEMORY.md` | Persistent-memory policy (default store: `context/from-history/`) |
+| `WORKSPACE.md` | Quick path map of the folder contract below |
 
-The output folder is the path that you should use to gather together your analyses. You should strive to generate the most thorough and complete analysis possible, ensuring that you use your fetch tool in order to assure that the software that you provide is up to date and that pricing is accurate and current. 
+The live research state lives in `outputs/individual/` and `context/from-history/`.
 
-## Stylistic Considerations
+## Directory Map
 
-In general, your research should be informative, but also provide some recommendations And attempt to rank the solutions that you have found based upon your assessment of their appropriateness with Daniel's use case and list of priorities. 
+| Directory | Purpose |
+|-----------|---------|
+| `context/from-human/` | Spec, requirements, constraints, deal-breakers |
+| `context/from-history/` | Compacted summaries from previous evaluation rounds |
+| `context/from-internet/` | Vendor docs, reviews, reference material |
+| `prompts/drafting/` | Prompts under development |
+| `prompts/queue/` | Prompts ready to run (in order) |
+| `prompts/run/initial/` | First-pass evaluation prompts |
+| `prompts/run/subsequent/` | Follow-up prompts that build on earlier outputs |
+| `outputs/individual/` | Raw output from each prompt run |
+| `outputs/aggregated/markdown/` | Daily digests, multi-output synthesis |
+| `outputs/aggregated/pdf/` | PDF exports |
+| `outputs/final/` | Polished recommendation reports |
+| `slash-commands/` | Custom slash commands for this workspace |
+| `notes/` | Working notes, methodology |
+| `private/` | Gitignored — client info, budget details, unshared drafts |
 
-In general, Daniel would prefer a list of 5 very strong candidates rather than a list of 10 options that might be less good fits. If Daniel has presented you with a specific spec in the prompt, then evaluate each solution according to that spec. Pay attention to whether Daniel has indicated if certain features or lack thereof are considered deal Breakers such that if they do not have those critical features then they should not be considered. If you can identify a solution that almost fits the spec but falls short on a deal breaker, you can mention it after the list of suggestions, noting that it was excluded from the main table because of this reason. 
+## Research Workflow
 
-## Comparison Tables
+### Prompts given directly in chat
 
-Daniel finds it helpful to have comparison tables showing how different providers implement features, especially if it's a head-to-head evaluation. But always provide these in addition to the main text. Ensure that these are formatted as properly readable Markdown tables. 
+If the user pastes a stack-evaluation request directly in the chat rather than placing a file in `prompts/queue/`, first persist it:
 
-## General Guidelines 
+1. Save the prompt verbatim to `prompts/run/initial/YYYY-MM-DD-{slug}.md` (or `prompts/run/subsequent/` if it builds on prior outputs), using today's date.
+2. Then process it following the "Running a prompt" workflow below.
 
-As an experienced technology professional, Daniel is aware that relying upon 3rd parties for software reviews is not always a foolproof methodology: some "reviews" are in fact undisclosed pair promotions!
+Every piece of research must have a corresponding dated prompt file on disk.
 
-It's important to be somewhat circumspect and even a little skeptical in evaluating. Daniel places high value upon Reddit as a source of online discourse that is *relatively* free of misleading promotion. The best and most rounded analysis is formed, however, whena multiplicity of sources are relied upon and the collective impression is synthesised.
+### Running a prompt
 
-To speed up the evaluation, make sure that you include links to the providers.
+1. Read `CONTEXT.md` and all files in `context/from-human/`, `context/from-history/`, and `context/from-internet/` to build full context — especially the hard requirements and budget band.
+2. Read the prompt file from `prompts/queue/` or `prompts/run/`.
+3. Conduct the research. **Use web fetch aggressively** — pricing and feature availability change constantly, and any claim about cost or capability must be verified against a live source.
+4. Save the output to `outputs/individual/YYYY-MM-DD-{slug}.md` using the Output Format below.
+5. If the prompt came from `prompts/queue/`, move it to the appropriate `prompts/run/` folder.
+6. **Same-day consolidation check**: if other outputs dated today already exist in `outputs/individual/`, remind the user that `/consolidate-day` is available. Do not auto-merge.
+7. Report what was run, the output path, and the headline recommendation.
 
-## Sequential Reports 
+### Building on previous work
 
-You may frequently engage in mult-run research in which Daniel asks you several successive questions.
+Before running any subsequent prompt, always read:
+- All files in `context/from-history/` (compacted prior evaluation rounds)
+- All files in `context/from-human/` (spec, constraints)
+- The most recent outputs in `outputs/individual/` if relevant
 
-If that happens:
+**Re-verify before reusing.** Pricing and feature data in `context/from-history/` decays fast. If a prior compaction said "Vendor X costs $50/mo and supports feature Y", re-check both with a live fetch before letting that fact drive a new recommendation.
 
-- Create individual markdown files for each question that is answered 
-- When done synthesise them into a final report 
+## Evaluation Style
 
-## Typical Workflow
+This is the part that makes this template different from the general research template. Every evaluation output should reflect these principles.
 
-Here's a typical workflow:
+### Quality over quantity
 
-- Daniel writes up a  spec and saves it in the prompt folder and either pastes that into the chat or links you to it 
-- You should read through the spec to identify Daniel's requess 
-- ONLY if you think there's something crtiical missing you should ask Daniel. Otherwise the preference is that you start searching.
-- You generate your findings in a document in the outputs folder 
-- You share this with Daniel 
-- Daniel may ask you to continue with the research 
-- When done present the finished report 
+Prefer a shortlist of **5 strong candidates** over a list of 10 mediocre options. If a candidate is clearly weak, don't pad the table with it.
 
-Daniel may also invoke MCP tools in order to ask you to save the research
+### Deal-breakers are binary
+
+Read `CONTEXT.md` for hard requirements. A candidate missing a deal-breaker is **excluded from the main shortlist**, regardless of how good it looks otherwise. If a near-miss candidate is interesting, mention it in a separate "Excluded — deal-breaker" section with a one-line explanation, not in the main ranked table.
+
+### Source skepticism
+
+Third-party "top 10" review articles are frequently undisclosed paid promotions. Rank sources roughly like this:
+
+1. **Primary**: official docs, pricing pages, vendor changelogs (verify directly via fetch)
+2. **Strong secondary**: Reddit threads, HN discussions, GitHub issue trackers — unfiltered user discourse
+3. **Weak secondary**: blog "reviews", aggregator/comparison sites, listicles — treat as leads, not evidence
+4. **Cross-reference everything**. A claim that appears in one blog post and nowhere else should be flagged as unverified.
+
+### Comparison tables
+
+Include at least one markdown comparison table per evaluation. Columns typically: Candidate, Pricing (with date verified), Deal-breaker coverage, Key strengths, Key weaknesses, Source link. Tables supplement the prose — never replace it.
+
+### Pricing currency
+
+Every price mentioned must carry the date it was verified and a link to the source page. Stale pricing is worse than no pricing.
+
+### Budget context
+
+If the user hasn't flagged a higher budget band in `CONTEXT.md`, assume the standard personal/small-business band. If they have, adjust the candidate pool accordingly. Don't waste a turn asking "is this for a client?" — the user will proactively tell you when it matters.
+
+## Output Format
+
+Every output in `outputs/individual/` **must begin with a provenance block** before any content:
+
+```
+---
+prompt_path: prompts/run/initial/2026-04-09-example.md
+prompt_summary: One-sentence restatement of what was asked.
+run_date: 2026-04-09
+---
+```
+
+Then the body, in this order:
+
+1. `> **Note**: This output was produced through AI-assisted research using Claude Code.` disclaimer
+2. `## Headline Recommendation` — one paragraph: the top pick and why
+3. `## Shortlist` — ranked list of up to 5 candidates with brief rationale
+4. `## Comparison Table` — markdown table covering the shortlist
+5. `## Detailed Evaluations` — one subsection per shortlisted candidate
+6. `## Excluded — Deal-Breakers` (optional) — near-misses that failed a hard requirement
+7. `## Open Questions` — anything that needs user input before a final call
+8. `## Sources` — every link used, grouped by candidate where possible, each with the date it was verified
+
+Write every output so it stands alone — a reader should be able to understand the recommendation without reading other files in the repo.
+
+### Same-day consolidation
+
+When several evaluation prompts are run in one day, use `/consolidate-day` to merge the individual outputs into `outputs/aggregated/markdown/YYYY-MM-DD-daily-digest.md`. The digest uses the provenance blocks from each output to build a "prompts run today" table automatically. The originals stay in place.
+
+### Compaction
+
+When context grows large, or at the end of an evaluation round:
+
+- Read all files in `outputs/individual/`
+- Write `context/from-history/YYYY-MM-DD-compaction.md` covering: ranked shortlists, eliminated candidates and why, unresolved deal-breakers, open questions, and dated pricing notes
+- This becomes the baseline context for subsequent rounds
+
+### Final report
+
+When the user is ready to lock in a decision, synthesise into `outputs/final/YYYY-MM-DD-{topic}-recommendation.md` — a single polished document containing the final recommendation, the full comparison, the rationale, and the sources. This is the shareable deliverable.
 
 ## MCP Workflows
 
-Very common MCP workflows will be something like:
+Common follow-ups after an evaluation:
 
-- Great. Can you convert to PDF and email to me? 
-- Great. can you save that to my Google Drive? 
+- "Convert to PDF and email it to me"
+- "Save that to my Google Drive"
+- "Upload this to Cloudinary"
+
+Use whichever MCP is available in the session. If none is connected, fall back to writing the export to `outputs/aggregated/pdf/` or `outputs/final/` and telling the user where it landed.
