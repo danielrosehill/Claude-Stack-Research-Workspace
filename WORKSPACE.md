@@ -6,7 +6,10 @@ Quick reference for where things live in this stack-research workspace. For the 
 
 | Path | Purpose |
 |---|---|
-| `context/from-human/` | Spec, requirements, constraints, deal-breakers |
+| `context/from-human/stack-requirements-template.md` | Blank spec form — copy to `stack-requirements.md` or let `/define-stack` fill it |
+| `context/from-human/stack-requirements.md` | The active spec for this search (produced by `/define-stack` or `/voice-intake`) |
+| `context/from-human/` | Other human-provided context, constraints, deal-breakers |
+| `context/general-prefs.md` | Standing software preferences (produced by `/personalise`) |
 | `context/from-internet/` | Vendor docs, review threads, reference material |
 | `prompts/drafting/` | Evaluation requests under development |
 | `prompts/queue/` | Prompts ready to run, in order |

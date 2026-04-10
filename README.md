@@ -25,11 +25,12 @@ This repository provides a structured environment for conducting thorough techni
 
 ### Typical Research Flow
 
-1. **Define the Request**: Create a specification in `prompts/drafting/` or `prompts/queue/`
-2. **Research Phase**: Claude analyzes requirements, searches for solutions, and evaluates options
-3. **Analysis**: Findings are documented in `outputs/` with detailed comparisons
-4. **Review**: Iterate on research based on feedback
-5. **Finalize**: Move completed prompts to `prompts/run/` and final reports to `outputs/recommendations/`
+1. **Define requirements**: Run `/define-stack` (interactive interview) or `/voice-intake` (from audio) to capture what you need, budget, deal-breakers, and preferences into a structured spec
+2. **Personalise** (first time only): Run `/personalise` to set your standing software preferences
+3. **Research**: Run `/start-research` — it reads your spec and begins evaluating candidates
+4. **Compare**: Use `/compare-stacks` for head-to-head analysis of shortlisted candidates
+5. **Price check**: Use `/pricing-analysis` for deep cost/TCO analysis
+6. **Finalize**: Use `/generate-report` to synthesize everything into a shareable recommendation
 
 ### Research Methodology
 
@@ -61,9 +62,13 @@ For sequential research questions:
 
 ## Custom Commands
 
-This workspace includes specialized slash commands for common research workflows:
+### Intake Commands
+- `/define-stack` - Structured interview (27 questions) to capture stack search requirements
+- `/voice-intake` - Transcribe a voice note and parse it into structured requirements
+- `/personalise` - Set your standing software preferences (run once per template clone)
 
-- `/start-research` - Initialize a new research project
+### Research Commands
+- `/start-research` - Initialize research — reads your requirements and begins evaluation
 - `/compare-stacks` - Deep-dive comparison of technology stacks
 - `/pricing-analysis` - Focused analysis on pricing models and cost comparison
 - `/generate-report` - Synthesize findings into final report
@@ -78,10 +83,10 @@ Specialized AI agents for research tasks:
 
 ## Getting Started
 
-1. Place your research specification in `prompts/queue/`
-2. Invoke Claude Code in this directory
-3. Reference the prompt file in conversation
-4. Claude will conduct research and generate outputs in `outputs/`
+1. Clone this template and open Claude Code in the new repo
+2. Run `/personalise` to set your standing software preferences
+3. Run `/define-stack` to describe what you're looking for (or `/voice-intake` with an audio note)
+4. Run `/start-research` to begin the evaluation
 
 ## Integration with MCP Tools
 

@@ -36,6 +36,30 @@ The live research state lives in `outputs/individual/` and `context/from-history
 | `notes/` | Working notes, methodology |
 | `private/` | Gitignored — client info, budget details, unshared drafts |
 
+## Intake Workflow
+
+Before any research begins, the user's requirements must be captured in `context/from-human/stack-requirements.md`. There are three ways to do this:
+
+### `/define-stack` — Interactive interview
+
+A structured questionnaire with 27 fixed questions across 10 sections: the problem, deployment model, budget, who/scale, deal-breakers, nice-to-haves, integrations, data portability, prior research/known candidates, and wrap-up. Walks the user through one section at a time and writes the completed spec to `context/from-human/stack-requirements.md`.
+
+### `/voice-intake` — From a voice note
+
+Transcribes an audio file (MP3/M4A/WAV/OGG), parses the transcript into the same structured fields, fills gaps from `context/general-prefs.md`, and writes `context/from-human/stack-requirements.md`. Saves the raw transcript alongside for reference.
+
+### Inline — User describes needs in chat
+
+If the user describes their needs directly in chat without running either command, `/start-research` will extract parameters and write the requirements file before proceeding.
+
+### `/personalise` — Standing preferences
+
+Captures the user's general software preferences (pricing tolerance, SaaS vs self-hosted, data portability, platforms, integrations, OSS stance, AI features, recurring deal-breakers) into `context/general-prefs.md`. These are defaults that apply across all searches — individual searches override them via `stack-requirements.md`. Run once when first cloning the template.
+
+### How intake feeds into research
+
+`/start-research` checks for `context/from-human/stack-requirements.md` first. If found, it summarises the spec and confirms readiness. If not found, it directs the user to `/define-stack`, `/voice-intake`, or inline capture. The requirements file plus `context/general-prefs.md` together define the full search parameters.
+
 ## Research Workflow
 
 ### Prompts given directly in chat
